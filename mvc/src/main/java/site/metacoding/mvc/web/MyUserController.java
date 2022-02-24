@@ -1,6 +1,6 @@
 package site.metacoding.mvc.web;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +25,15 @@ public class MyUserController {
 	// GET: http://localhost:8000/myuser
 	public void getAll() {
 		System.out.println("getAll 호출됨");
+		List<MyUser> myUsers = repo.selectAll();
+		request.setAttribute("myUsers", myUsers);
+		try {
+			RequestDispatcher dis = request.getRequestDispatcher("/user.jsp");
+			dis.forward(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// GET: http://localhost:8000/myuser?id=1

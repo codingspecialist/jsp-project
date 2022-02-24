@@ -21,7 +21,25 @@ public class MyUserRepository {
 	public List<MyUser> selectAll() {
 		List<MyUser> myUsers = new ArrayList<>();
 		
-		return null;
+		try {
+			String sql = "SELECT * FROM myUser";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) { // 한건 밖에 없어서 굳이 while 돌릴 필요가 없다.
+				MyUser myUser = new MyUser(
+						rs.getInt("id"),
+						rs.getString("username"),
+						rs.getString("password"),
+						rs.getString("email")
+				);
+				myUsers.add(myUser);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return myUsers;
 	}
 	
 	// SELECT * FROM myUser WHERE id = ?
